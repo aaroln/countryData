@@ -33,19 +33,25 @@ def index():
     <h3>population</h3>
     <img src="/matplot-as-image-{value}.png"
          alt="random points as png"
-         height="700"
+         height="200"
          
     >
     <h4>land cover</h4>
     <img src="/matplot-as-image2-{value}.png"
          alt="random points as png"
-         height="700"
+         height="200"
     >
 
     <h5>urban land</h5>
     <img src="/matplot-as-image3-{value}.png"
          alt="random points as png"
-         height="700"
+         height="200"
+    >
+
+    <h5>urban pop</h5>
+    <img src="/matplot-as-image4-{value}.png"
+         alt="random points as png"
+         height="200"
     >
     
     """
@@ -102,6 +108,24 @@ def plot_png3(value=0):
     yValuesUrban = (dfUrbanLand.iloc[value].to_numpy()[1:]) 
     
     axis.plot(xValuesUrban, yValuesUrban)
+
+    output = io.BytesIO()
+    FigureCanvasAgg(fig).print_png(output)
+    return Response(output.getvalue(), mimetype="image/png")
+
+
+@app.route("/matplot-as-image4-<int:value>.png")
+def plot_png4(value=0):
+    """ renders the plot on the fly.
+    """
+
+    fig = Figure()
+    axis = fig.add_subplot(1, 1, 1)
+
+    xValuesUrbanPop = dfUrbanPop.columns.values[1:]
+    yValuesUrbanPop = (dfUrbanPop.iloc[value].to_numpy()[1:]) 
+    
+    axis.plot(xValuesUrbanPop, yValuesUrbanPop)
 
     output = io.BytesIO()
     FigureCanvasAgg(fig).print_png(output)
