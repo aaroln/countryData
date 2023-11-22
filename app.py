@@ -1,9 +1,10 @@
 import io
 import random
-from flask import Flask, Response, request
+from flask import Flask, Response, request, render_template, jsonify
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.backends.backend_svg import FigureCanvasSVG
-
+import pandas as pd
+import plotly.express as px
 
 from matplotlib.figure import Figure
 
@@ -11,62 +12,38 @@ from matplotlib.figure import Figure
 app = Flask(__name__)
 
 
+# Datasets
+dfPop = pd.read_csv('population.csv')
+dfLandCover = pd.read_csv('landCover.csv')
+dfUrbanLand = pd.read_csv('urbanLand.csv')
+dfUrbanPop = pd.read_csv('urbanPop.csv')
+
 @app.route("/")
 def index():
-    """ Returns html with the img tag for your plot.
-    """
-    num_x_points = int(request.args.get("num_x_points", 50))
-    # in a real app you probably want to use a flask template.
-    return f"""
-    <h1>Flask and matplotlib</h1>
-    <h2>Random data with num_x_points={num_x_points}</h2>
-    <form method=get action="/">
-      <input name="num_x_points" type=number value="{num_x_points}" />
-      <input type=submit value="update graph">
-    </form>
-    <h3>Plot as a png</h3>
-    <img src="/matplot-as-image-{num_x_points}.png"
-         alt="random points as png"
-         height="200"
-    >
-    <h3>Plot as a SVG</h3>
-    <img src="/matplot-as-image-{num_x_points}.svg"
-         alt="random points as svg"
-         height="200"
-    >
-    """
-    # from flask import render_template
-    # return render_template("yourtemplate.html", num_x_points=num_x_points)
 
+    countryName = str(request.args.get("country"))
+    return render_template("index.html", countryName=countryName)
 
-@app.route("/matplot-as-image-<int:num_x_points>.png")
-def plot_png(num_x_points=50):
-    """ renders the plot on the fly.
-    """
-    fig = Figure()
-    axis = fig.add_subplot(1, 1, 1)
-    x_points = range(num_x_points)
-    axis.plot(x_points, [random.randint(1, 30) for x in x_points])
+@app.route("/population-<string:countryName>.svg")
+def plot_svg(countryName):
 
-    output = io.BytesIO()
-    FigureCanvasAgg(fig).print_png(output)
-    return Response(output.getvalue(), mimetype="image/png")
+    xValuesPop = dfPop.columns.values[1:]
 
+    for i in range(len(dfPop['Country Name'].values)):
+        if dfPop['Country Name'].values[i].lower() == countryName.lower():
+            yValuesPop = (dfPop.iloc[0].to_numpy()[1:]) / 1000000
+            fig = Figure()
+            axis = fig.add_subplot(1, 1, 1)
+            axis.plot(xValuesPop, yValuesPop)
 
-@app.route("/matplot-as-image-<int:num_x_points>.svg")
-def plot_svg(num_x_points=50):
-    """ renders the plot on the fly.
-    """
-    fig = Figure()
-    axis = fig.add_subplot(1, 1, 1)
-    x_points = range(num_x_points)
-    axis.plot(x_points, [random.randint(1, 30) for x in x_points])
+            output = io.BytesIO()
+            FigureCanvasAgg(fig).print_svg(output)
 
-    output = io.BytesIO()
-    FigureCanvasSVG(fig).print_svg(output)
-    return Response(output.getvalue(), mimetype="image/svg+xml")
+            return Response(output.getvalue(), mimetype="image/svg+xml")
+       
+    return "Country not found", 404
 
 
 if __name__ == "__main__":
-    
+
     app.run(debug=True, port=8080)
