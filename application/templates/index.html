@@ -36,9 +36,26 @@
             {% else %}
                 <p>Country entered: {{ user_input }}</p>
                 
-                <div class="grid-item">
-                    <h3>Population</h3>
-                    <img src="{{ url_for('plot_png') }}" alt="population png">
+                <div class="image-grid">
+                    <div class="grid-item">
+                        <h3>Population</h3>
+                        <img src="{{ url_for('pop_png') }}" alt="population png">
+                    </div>
+                    
+                    <div class="grid-item">
+                        <h3>Urban Population</h3>
+                        <img src="{{ url_for('Upop_png') }}" alt="Urban population png">
+                    </div>
+
+                    <div class="grid-item">
+                        <h3>Urban Land Area</h3>
+                        <img src="{{ url_for('LandA_png') }}" alt="Urban Land Area png">
+                    </div>
+
+                    <div class="grid-item">
+                        <h3>Urban Land Percentage</h3>
+                        <img src="{{ url_for('LandP_png') }}" alt="Urban Land Area png">
+                    </div>
                 </div>
             {% endif %}
         {% endif %}

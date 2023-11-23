@@ -26,3 +26,16 @@
   .search {
     font-family: 'Inconsolata', monospace;
   }
+
+
+  /* Add this CSS for the grid layout */
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Adjust the number of columns as needed */
+    gap: 20px; /* Adjust the gap between items as needed */
+}
+
+.grid-item {
+    text-align: center;
+}
+
