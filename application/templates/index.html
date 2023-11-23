@@ -22,16 +22,16 @@
 
     <div class="search">
         <h1></h1>
-      <form method="POST" action="/process">
+      <form method="POST" action="/">
           <label for="user_input">Country:</label>
           <input type="text" id="user_input" name="user_input" required>
           <button type="submit">Submit</button>
       </form>
 
       {% if user_input %}
-        <p>The entered string is: {{ user_input }}</p>
+        <p>The entered country is: {{ user_input }}</p>
     {% endif %}
-    
+
     </div>
 
 </body>
