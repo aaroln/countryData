@@ -1,6 +1,6 @@
 import io
 import random
-from flask import Flask, Response, request
+from flask import Flask, Response, request, render_template
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.backends.backend_svg import FigureCanvasSVG
 import pandas as pd
@@ -19,44 +19,8 @@ dfUrbanPop = pd.read_csv('urbanPop.csv')
 
 @app.route("/")
 def index():
-    """ Returns html with the img tag for your plot.
-    """
     value = int(request.args.get("value", 0))
-    # in a real app you probably want to use a flask template.
-    return f"""
-    <h1>Flask and matplotlib</h1>
-    <h2>Random data with value={value}</h2>
-    <form method=get action="/">
-      <input name="value" type=number value="{value}" />
-      <input type=submit value="update graph">
-    </form>
-    <h3>population</h3>
-    <img src="/matplot-as-image-{value}.png"
-         alt="random points as png"
-         height="200"
-         
-    >
-    <h4>land cover</h4>
-    <img src="/matplot-as-image2-{value}.png"
-         alt="random points as png"
-         height="200"
-    >
-
-    <h5>urban land</h5>
-    <img src="/matplot-as-image3-{value}.png"
-         alt="random points as png"
-         height="200"
-    >
-
-    <h5>urban pop</h5>
-    <img src="/matplot-as-image4-{value}.png"
-         alt="random points as png"
-         height="200"
-    >
-    
-    """
-    # from flask import render_template
-    # return render_template("yourtemplate.html", num_x_points=num_x_points)
+    return render_template("index.html", value=value)
 
 
 @app.route("/matplot-as-image-<int:value>.png")

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'main.css')}}" type="text/css">
+    
+    {% if title %}
+        <title>Country Data-{{title}}</title>
+    {% else %}
+        <title>Country Data</title>
+    {% endif %}
+</head>
+<body>
+   
+    <div class="topnav">
+        <a class="active">Country Data</a>
+      </div>
+
+    <div class="search">
+        <h1></h1>
+      <form method="POST" action="/process">
+          <label for="user_input">Country:</label>
+          <input type="text" id="user_input" name="user_input" required>
+          <button type="submit">Submit</button>
+      </form>
+
+      {% if user_input %}
+        <p>The entered string is: {{ user_input }}</p>
+    {% endif %}
+    
+    </div>
+
+</body>
+</html>
