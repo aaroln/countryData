@@ -11,20 +11,31 @@ app.secret_key = '099ff9bc6835c551515f6f449cb4c01530dc9d8d5d78881f'
 # Datasets
 dfPop = pd.read_csv('population.csv')
 
+<<<<<<< HEAD
 # Getting country list and capitalizing it
 countries = dfPop['Country Name'].tolist()
 listCountry = [s.upper() for s in countries]
+=======
+# Getting country list and capitalising it
+listCountry = dfPop['Country Name'].tolist()
+listCountry = [s.upper() for s in listCountry]
+
+>>>>>>> 2e990137e111c9ff5f7a3247e9cbbb459daec86d
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     user_input = None
     invalid_entry = False
+<<<<<<< HEAD
     idx = None
+=======
+>>>>>>> 2e990137e111c9ff5f7a3247e9cbbb459daec86d
     
     if request.method == 'POST':
         user_input = request.form['user_input'].upper()
         if user_input not in listCountry:
             invalid_entry = True
+<<<<<<< HEAD
         else:
             idx = listCountry.index(user_input)
             session['user_input'] = user_input
@@ -62,6 +73,14 @@ def plot_png():
         return Response(output.getvalue(), mimetype="image/png")
     else:
         return "User input not available"
+=======
+
+    return render_template('index.html', user_input=user_input, invalid_entry=invalid_entry)
+
+
+@app.route('/')
+def popChart():
+>>>>>>> 2e990137e111c9ff5f7a3247e9cbbb459daec86d
 
 if __name__ == "__main__":
     app.run(debug=True)

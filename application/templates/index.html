@@ -24,11 +24,27 @@
 
     <div class="search">
         <h1></h1>
+<<<<<<< HEAD
         <form method="POST" action="/">
             <label for="user_input">Country:</label>
             <input type="text" id="user_input" name="user_input" required>
             <button type="submit">Submit</button>
         </form>
+=======
+      <form method="POST" action="/">
+          <label for="user_input">Country:</label>
+          <input type="text" id="user_input" name="user_input" required>
+          <button type="submit">Submit</button>
+      </form>
+
+      {% if user_input %}
+        {% if invalid_entry %}
+            <p>Country not found. Please enter a valid country.</p>
+        {% else %}
+            <p>Country entered: {{ user_input }}</p>
+        {% endif %}
+    {% endif %}
+>>>>>>> 2e990137e111c9ff5f7a3247e9cbbb459daec86d
 
         {% if user_input %}
             {% if invalid_entry %}
