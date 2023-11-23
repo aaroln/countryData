@@ -29,7 +29,11 @@
       </form>
 
       {% if user_input %}
-        <p>The entered country is: {{ user_input }}</p>
+        {% if invalid_entry %}
+            <p>Country not found. Please enter a valid country.</p>
+        {% else %}
+            <p>Country entered: {{ user_input }}</p>
+        {% endif %}
     {% endif %}
 
     </div>
