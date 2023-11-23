@@ -6,7 +6,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{url_for('static', filename = 'main.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}" type="text/css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
     {% if title %}
         <title>Country Data-{{title}}</title>
@@ -18,20 +20,28 @@
    
     <div class="topnav">
         <a class="active">Country Data</a>
-      </div>
+    </div>
 
     <div class="search">
         <h1></h1>
-      <form method="POST" action="/">
-          <label for="user_input">Country:</label>
-          <input type="text" id="user_input" name="user_input" required>
-          <button type="submit">Submit</button>
-      </form>
+        <form method="POST" action="/">
+            <label for="user_input">Country:</label>
+            <input type="text" id="user_input" name="user_input" required>
+            <button type="submit">Submit</button>
+        </form>
 
-      {% if user_input %}
-        <p>The entered country is: {{ user_input }}</p>
-    {% endif %}
-
+        {% if user_input %}
+            {% if invalid_entry %}
+                <p>Country not found. Please enter a valid country.</p>
+            {% else %}
+                <p>Country entered: {{ user_input }}</p>
+                
+                <div class="grid-item">
+                    <h3>Population</h3>
+                    <img src="{{ url_for('plot_png') }}" alt="population png">
+                </div>
+            {% endif %}
+        {% endif %}
     </div>
 
 </body>
