@@ -117,7 +117,7 @@ def LandA_png():
         # Title and labels
         axis.set_title(f'Total Urban Land Area in {user_input} from 1990 to 2015')
         axis.set_xlabel('Year')
-        axis.set_ylabel('Area (sqKm^2)')
+        axis.set_ylabel('Area (sq km)')
 
         # Adjusting the size of the figure
         fig.set_size_inches(8, 4)
