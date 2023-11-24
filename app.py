@@ -51,7 +51,7 @@ def pop_png():
         axis.plot(xValuesPop, yValuesPop, color='blue', linestyle='-')
 
         # Title and labels
-        axis.set_title(f'Population Growth of {user_input} from 1960 to 2020 (Ages 15-65)')
+        axis.set_title(f'Population Growth of {user_input} from 1960 to 2020 (Ages 15-64)')
         axis.set_xlabel('Year')
         axis.set_ylabel('Population (in millions)')
         axis.set_xticks(xValuesPop[::5])
