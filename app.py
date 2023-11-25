@@ -3,6 +3,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg
 import io
 import pandas as pd
 from matplotlib.figure import Figure
+import numpy as np
 
 app = Flask(__name__)
 
@@ -140,6 +141,7 @@ def LandP_png():
 
         xValuesPop = dfLandCover.columns.values[1:]
         yValuesPop = (dfLandCover.iloc[idx].to_numpy()[1:])
+
 
         # Adjusting visual settings
         axis.plot(xValuesPop, yValuesPop, color='black', linestyle='-')
